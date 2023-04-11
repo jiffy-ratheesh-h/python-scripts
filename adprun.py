@@ -211,7 +211,34 @@ class ADPRun:
         self.final_cleanup()
         self.full_table.tocsv("full_table.csv")
         self.png_file = pd.read_csv("full_table.csv")
+        self.format_for_jiffy()
         return self.full_table
+
+    def format_for_jiffy(self):
+        column_mappings = {
+            "Employee Address Line 1": "Street Address #1",
+            "Employee Address Line 2": "Street Address #2",
+            "Employee City": "City",
+            "Employee State": "State",
+            "Employee ZIP": "Zip Code",
+            "Employee Telephone Number": "Phone",
+            "Personal Email": "Email Address",
+            "Work Email": "Secondary Email Address",
+            "Hire Date": "Date of Hire",
+            "Birth Date": "Date of Birth",
+            "": "Date of Rehire",
+            "Termination Date": "Date of Termination",
+            "SSN": "Social Security Number",
+            "Period Gross Pay": "Current Period Compensation",
+            "Period Hours Worked": "Current Period Hours",
+            "Pre-tax Contribution": "Pre-tax Contribution Amount",
+            "Roth Contribution": "Roth Contribution Amount",
+            "Loan Repayment": "Loan Payment",
+            "Year to Date Hours Worked": "YTD Hours",
+        }
+        self.png_file.rename(columns=column_mappings, inplace=True)
+        for col in ["Date  of Rehire", "Division", "Gross Salary"]:
+            self.png_file[col] = ""
 
 
 def main():
